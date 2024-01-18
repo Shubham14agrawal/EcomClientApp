@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, of, ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { IAddress } from '../shared/models/address';
 import { IUser } from '../shared/models/user';
@@ -11,7 +11,7 @@ import { IUser } from '../shared/models/user';
   providedIn: 'root'
 })
 export class AccountService {
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.IdentityServerUrl;
   private currentUserSource = new ReplaySubject<IUser>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
@@ -36,19 +36,34 @@ export class AccountService {
     )
   }
 
+  // login(values: any) {
+  //   return this.http.post(this.baseUrl + 'Account/Login', values).pipe(
+  //     map((user: IUser) => {
+  //       if (user) {
+  //         localStorage.setItem('token', user.token);
+  //         this.currentUserSource.next(user);
+  //       }
+  //     })
+  //   )
+  // }
   login(values: any) {
-    return this.http.post(this.baseUrl + 'account/login', values).pipe(
-      map((user: IUser) => {
-        if (user) {
-          localStorage.setItem('token', user.token);
-          this.currentUserSource.next(user);
+    return this.http.post(`${this.baseUrl}connect/token`, values).pipe(
+      map((response: any) => {
+        if (response.access_token) {
+          localStorage.setItem('token', response.access_token);
+          this.loadCurrentUser(response.access_token).subscribe(); 
         }
+      }),
+      catchError((error: any) => {
+        console.error('Error during login:', error);
+        throw error; 
       })
-    )
+    );
   }
+  
 
   register(values: any) {
-    return this.http.post(this.baseUrl + 'account/register', values).pipe(
+    return this.http.post(this.baseUrl + 'Account/Register', values).pipe(
       map((user: IUser) => {
         if (user) {
           localStorage.setItem('token', user.token);

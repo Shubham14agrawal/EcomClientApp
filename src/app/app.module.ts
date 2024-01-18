@@ -12,6 +12,8 @@ import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
 import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
+import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client';
+
 
 @NgModule({
   declarations: [
@@ -24,12 +26,26 @@ import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
     HttpClientModule,
     CoreModule,
     HomeModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    AuthModule.forRoot({
+      config: {
+        authority: 'https://localhost:5443',
+        redirectUrl: 'http://localhost:4200/signin-oidc',
+        postLogoutRedirectUri: 'http://localhost:4200/',
+        clientId: 'angular_spa',
+        scope: 'openid profile email',
+        responseType: 'code',
+        silentRenew: true,
+        useRefreshToken: true,
+        logLevel: LogLevel.Debug,
+      },
+    }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
