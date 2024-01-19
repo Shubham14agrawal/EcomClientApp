@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { v4 as uuidv4 } from 'uuid';\nexport class Basket {\n  id = uuidv4();\n  items = [];\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

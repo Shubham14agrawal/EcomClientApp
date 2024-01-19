@@ -1,1 +1,0 @@
-{"ast":null,"code":"export class Pagination {\n  constructor() {\n    this.data = [];\n  }\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}

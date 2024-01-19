@@ -1,1 +1,0 @@
-{"ast":null,"code":"export class Pagination {\n  pageIndex;\n  pageSize;\n  count;\n  data = [];\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
