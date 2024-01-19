@@ -30,10 +30,10 @@ import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client'
     AuthModule.forRoot({
       config: {
         authority: 'https://localhost:5443',
-        redirectUrl: 'http://localhost:4200/signin-oidc',
+        redirectUrl: 'https://localhost:4200/signin-oidc',
         postLogoutRedirectUri: 'http://localhost:4200/',
-        clientId: 'angular_spa',
-        scope: 'openid profile email',
+        clientId: 'interactive',
+        scope: 'CoffeeAPI.read openid profile',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,

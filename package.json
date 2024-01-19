@@ -28,6 +28,7 @@
     "ngx-spinner": "^16.0.2",
     "ngx-toastr": "^18.0.0",
     "rxjs": "~6.6.0",
+    "sha256": "^0.2.0",
     "uuid": "^8.3.2",
     "xng-breadcrumb": "^10.0.2",
     "zone.js": "^0.14.3"

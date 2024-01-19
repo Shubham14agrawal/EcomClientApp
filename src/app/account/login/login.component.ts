@@ -3,6 +3,7 @@ import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccountService } from '../account.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,6 +12,8 @@ import { AccountService } from '../account.service';
 export class LoginComponent implements OnInit {
   loginForm: UntypedFormGroup;
   returnUrl: string;
+  email: string;
+  password: string;
 
   constructor(private accountService: AccountService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -28,11 +31,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.accountService.login(this.loginForm.value).subscribe(() => {
-      this.router.navigateByUrl(this.returnUrl);
-    }, error => {
-      console.log(error);
-    })
+    // this.accountService.login(this.loginForm.value).subscribe(() => {
+    //   this.router.navigateByUrl(this.returnUrl);
+    // }, error => {
+    //   console.log(error);
+    // })
+    
   }
 
 }
