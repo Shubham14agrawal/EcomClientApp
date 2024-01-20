@@ -4,25 +4,50 @@ import { AccountService } from './account/account.service';
 import { BasketService } from './basket/basket.service';
 import { IPagination } from './shared/models/pagination';
 import { IProduct } from './shared/models/product';
+import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
+
+
 export class AppComponent implements OnInit {
   title = 'SkiNet';
 
-  constructor(private basketService: BasketService, private accountService: AccountService) { }
+  constructor(public oidcSecurityService: OidcSecurityService, private basketService: BasketService, private accountService: AccountService) { }
 
-  ngOnInit(): void {
-    this.loadBasket();
-    this.loadCurrentUser();
+  // ngOnInit(): void {
+  //   this.loadBasket();
+  //   this.loadCurrentUser();
+  // }
+
+  ngOnInit() {
+    this.oidcSecurityService
+      .checkAuth()
+      .subscribe((loginResponse: LoginResponse) => {
+        const { isAuthenticated, userData, accessToken, idToken, configId } =
+          loginResponse;
+
+        this.loadBasket();
+        this.loadCurrentUser();
+      });
   }
 
+  login() {
+    this.oidcSecurityService.authorize();
+  }
+
+  logout() {
+    this.oidcSecurityService
+      .logoff()
+      .subscribe((result) => console.log(result));
+  }
+  
   loadCurrentUser() {
-    const token = localStorage.getItem('token');
-    this.accountService.loadCurrentUser(token).subscribe(() => {
+   // const token = localStorage.getItem('token');
+    this.accountService.loadCurrentUser().subscribe(() => {
       console.log('loaded user');
     }, error => {
       console.log(error);
