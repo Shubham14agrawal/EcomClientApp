@@ -15,6 +15,7 @@ const routes: Routes = [
     path: 'shop', loadChildren: () => import('./shop/shop.module').then(mod => mod.ShopModule),
     data: { breadcrumb: 'Shop' }
   },
+  { path: 'signin-oidc', component: HomeComponent, data: { breadcrumb: 'Home' } },
   {
     path: 'basket', loadChildren: () => import('./basket/basket.module').then(mod => mod.BasketModule),
     data: { breadcrumb: 'Basket' }

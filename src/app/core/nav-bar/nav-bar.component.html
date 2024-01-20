@@ -14,7 +14,7 @@
 
     <ng-container *ngIf="(currentUser$ | async) === null">
       <a (click)="redirectToIdentityServerLogin()" class="btn btn-outline-secondary mr-2" href="#">Login</a>
-      <a routerLink="account/register" class="btn btn-outline-secondary mr-3" href="#">Sign up</a>
+      <a  class="btn btn-outline-secondary mr-3" href="#">Sign up</a>
     </ng-container>
     <ng-container *ngIf="(currentUser$ | async) as user">
       <div class="dropdown ml-3 mr-5" dropdown>
@@ -36,5 +36,5 @@
       </div>
     </ng-container>
   </div>
-
+  <div *ngIf="isLoggedIn">"LOGGED IN"</div>
 </header>
