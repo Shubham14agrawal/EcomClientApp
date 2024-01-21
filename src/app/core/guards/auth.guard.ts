@@ -13,12 +13,12 @@ export class AuthGuard  {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> {
-    return this.accountService.currentUser$.pipe(
-      map(auth => {
-        if (auth) {
-          return true;
-        }
-        this.router.navigate(['account/login'], {queryParams: {returnUrl: state.url}})
+      return this.accountService.isAuthenticated$.pipe(
+        map(auth => {
+          if (auth) {
+            return true;
+          }
+        this.accountService.login();
       })
     )
   }

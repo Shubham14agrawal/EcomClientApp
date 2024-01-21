@@ -30,7 +30,7 @@ import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client'
     AuthModule.forRoot({
       config: {
         authority: 'https://localhost:5443',
-        redirectUrl: 'https://localhost:4200/signin-oidc',
+        redirectUrl: 'http://localhost:4200/signin-oidc',
         postLogoutRedirectUri: 'http://localhost:4200/',
         clientId: 'interactive',
         scope: 'CoffeeAPI.read openid profile',
@@ -44,8 +44,8 @@ import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client'
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+   // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
