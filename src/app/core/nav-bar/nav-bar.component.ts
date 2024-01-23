@@ -18,23 +18,25 @@ import { AccountService } from '../../account/account.service';
 export class NavBarComponent implements OnInit {
   basket$: Observable<IBasket>;
   baseUrl = environment.IdentityServerUrl;
-  private currentUserSource = new ReplaySubject<IUser>(1);
-  currentUser$ = this.currentUserSource.asObservable();
-  // currentUser$: Observable<IUser>;
+  // private currentUserSource = new ReplaySubject<IUser>(1);
+  // currentUser$ = this.currentUserSource.asObservable();
+  currentUser$: Observable<IUser>;
 
   isLoggedIn: boolean = false;
-  // token = ""
-  // generateRandomValue(): string {
-  //   return uuid.v4();
-  // }
+  userName: string; 
 
   constructor(private http: HttpClient,private basketService: BasketService, private oidcSecurityService: OidcSecurityService,private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.basket$ = this.basketService.basket$; 
+    this.loadCurrentUser();
+    this.currentUser$ = this.accountService.currentUser$;
   }
   redirectToIdentityServerLogin() {
     this.accountService.login();
+  }
+  redirectToIdentityServerRegister() {
+    this.accountService.register();
   }
 
   loadCurrentUser() {

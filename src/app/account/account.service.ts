@@ -22,7 +22,7 @@ export class AccountService {
     private router: Router,
     private oidcSecurityService: OidcSecurityService
   ) {
-    this.isAuthenticated$= this.oidcSecurityService.isAuthenticated$
+    //this.isAuthenticated$= this.oidcSecurityService.isAuthenticated$
   }
 
   login() {
@@ -32,7 +32,9 @@ export class AccountService {
   logout() {
     localStorage.removeItem('token');
     this.currentUserSource.next(null);
-    this.oidcSecurityService.logoff();
+    // this.oidcSecurityService.logoff();
+    this.oidcSecurityService.logoffAndRevokeTokens()
+    .subscribe((result) => console.log(result));
     this.router.navigateByUrl('/');
   }
 
@@ -46,21 +48,23 @@ export class AccountService {
     return this.oidcSecurityService.getAccessToken();
   }
 
-  register(values: any) {
-    return this.http.post(`${this.baseUrl}account/register`, values).pipe(
-      map((user: IUser) => {
-        if (user) {
-          localStorage.setItem('token', user.token);
-          this.currentUserSource.next(user);
-        }
-      }),
-      catchError((error) => {
-        // Handle registration error
-        console.error(error);
-        throw error;
-      })
-    );
+  register() {
+    window.location.href = `${this.baseUrl}Account/Register`;
+    // return this.http.post(`${this.baseUrl}Account/Register`, values).pipe(
+    //   map((user: IUser) => {
+    //     if (user) {
+    //       localStorage.setItem('token', user.token);
+    //       this.currentUserSource.next(user);
+    //     }
+    //   }),
+    //   catchError((error) => {
+    //     // Handle registration error
+    //     console.error(error);
+    //     throw error;
+    //   })
+    // );
   }
+
 
   checkEmailExists(email: string) {
     return this.http.get(`${this.apiUrl}account/emailexists?email=${email}`);
@@ -78,29 +82,40 @@ export class AccountService {
     return this.getAccessToken().pipe(
       mergeMap((accessToken: string) => {
         console.log('Access Token:', accessToken);
+        this.currentUser$.subscribe(user => console.log('User:', user));
+        
+        
+        
         localStorage.setItem('token', accessToken);
         if (accessToken == null) {
           this.currentUserSource.next(null);
           return of(null);
         }
+        this.oidcSecurityService.userData$.subscribe((data) => {
+          const user = data.userData;
+          this.currentUserSource.next(user);
+          return of(user);
+        })
+
+      
   
-        let headers = new HttpHeaders();
-        headers = headers.set('Authorization', `Bearer ${accessToken}`);
+        // let headers = new HttpHeaders();
+        // headers = headers.set('Authorization', `Bearer ${accessToken}`);
   
-        return this.http.get(`${this.apiUrl}account`, { headers }).pipe(
-          map((user: IUser) => {
-            if (user) {
-              localStorage.setItem('token',accessToken);
-              this.currentUserSource.next(user);
-            }
-            return user; // Return the user object
-          }),
-          catchError((error) => {
-            // Handle loading current user error
-            console.error(error);
-            throw error;
-          })
-        );
+        // return this.http.get(`${this.apiUrl}account`, { headers }).pipe(
+        //   map((user: IUser) => {
+        //     if (user) {
+        //       localStorage.setItem('token',accessToken);
+        //       this.currentUserSource.next(user);
+        //     }
+        //     return user; // Return the user object
+        //   }),
+        //   catchError((error) => {
+        //     // Handle loading current user error
+        //     console.error(error);
+        //     throw error;
+        //   })
+        // );
       }),
       catchError((error) => {
         console.error('Error fetching access token:', error);

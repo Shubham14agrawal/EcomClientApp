@@ -30,20 +30,25 @@ export class AppComponent implements OnInit {
         const { isAuthenticated, userData, accessToken, idToken, configId } =
           loginResponse;
 
-        this.loadBasket();
         this.loadCurrentUser();
+        console.log("Authentication status:", isAuthenticated);
+        // if (isAuthenticated) {
+        //   console.log("data", userData);
+        // }
+        this.loadBasket();
       });
+      
   }
 
-  login() {
-    this.oidcSecurityService.authorize();
-  }
+  // login() {
+  //   this.oidcSecurityService.authorize();
+  // }
 
-  logout() {
-    this.oidcSecurityService
-      .logoff()
-      .subscribe((result) => console.log(result));
-  }
+  // logout() {
+  //   this.oidcSecurityService
+  //     .logoff()
+  //     .subscribe((result) => console.log(result));
+  // }
   
   loadCurrentUser() {
     this.accountService.loadCurrentUser().subscribe(() => {
