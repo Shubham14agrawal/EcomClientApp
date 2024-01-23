@@ -11,7 +11,6 @@ import { HomeModule } from './home/home.module';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
-import { JwtInterceptor } from './core/interceptors/jwt.interceptor';
 import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client';
 
 
@@ -30,22 +29,22 @@ import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client'
     AuthModule.forRoot({
       config: {
         authority: 'https://localhost:5443',
-        redirectUrl: 'http://localhost:4200/signin-oidc',
-        postLogoutRedirectUri: 'http://localhost:4200/',
+        redirectUrl: 'https://localhost:4200/signin-oidc',
+        postLogoutRedirectUri: 'https://localhost:4200/',
         clientId: 'interactive',
         scope: 'CoffeeAPI.read openid profile',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,
         logLevel: LogLevel.Debug,
+        secureRoutes: ['https://localhost:4200/'],
       },
     }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-   { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-   // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

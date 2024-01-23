@@ -30,9 +30,7 @@ export class AccountService {
   }
 
   logout() {
-    localStorage.removeItem('token');
     this.currentUserSource.next(null);
-    // this.oidcSecurityService.logoff();
     this.oidcSecurityService.logoffAndRevokeTokens()
     .subscribe((result) => console.log(result));
     this.router.navigateByUrl('/');
@@ -84,9 +82,6 @@ export class AccountService {
         console.log('Access Token:', accessToken);
         this.currentUser$.subscribe(user => console.log('User:', user));
         
-        
-        
-        localStorage.setItem('token', accessToken);
         if (accessToken == null) {
           this.currentUserSource.next(null);
           return of(null);
