@@ -46,3 +46,4 @@ testem.log
 Thumbs.db
 src/app/core/services/IdentityService.service.spec.ts
 src/app/core/services/IdentityService.service.spec.ts
+.vscode/launch.json

@@ -84,22 +84,26 @@
        },
        "serve": {
          "builder": "@angular-devkit/build-angular:dev-server",
-         "options": {
-           "browserTarget": "client:build"
+         "options": 
+         {
+          "ssl": true,
+          "sslKey": "ssl/server.key",
+          "sslCert": "ssl/server.crt",
+           "buildTarget": "client:build"
          },
          "configurations": {
            "production": {
-             "browserTarget": "client:build:production"
+             "buildTarget": "client:build:production"
            },
            "development": {
-             "browserTarget": "client:build:development"
+             "buildTarget": "client:build:development"
            }
          }
        },
        "extract-i18n": {
          "builder": "@angular-devkit/build-angular:extract-i18n",
          "options": {
-           "browserTarget": "client:build"
+           "buildTarget": "client:build"
          }
        },
        "test": {
@@ -150,7 +154,6 @@
      }
    }
 },
-"defaultProject": "client",
 "cli": {
   "analytics": false
 }

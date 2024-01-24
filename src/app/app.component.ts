@@ -18,11 +18,6 @@ export class AppComponent implements OnInit {
 
   constructor(public oidcSecurityService: OidcSecurityService, private basketService: BasketService, private accountService: AccountService) { }
 
-  // ngOnInit(): void {
-  //   this.loadBasket();
-  //   this.loadCurrentUser();
-  // }
-
   ngOnInit() {
     this.oidcSecurityService
       .checkAuth()
@@ -30,19 +25,11 @@ export class AppComponent implements OnInit {
         const { isAuthenticated, userData, accessToken, idToken, configId } =
           loginResponse;
 
-        this.loadBasket();
         this.loadCurrentUser();
+        console.log("Authentication status:", isAuthenticated);
+        this.loadBasket();
       });
-  }
-
-  login() {
-    this.oidcSecurityService.authorize();
-  }
-
-  logout() {
-    this.oidcSecurityService
-      .logoff()
-      .subscribe((result) => console.log(result));
+      
   }
   
   loadCurrentUser() {
