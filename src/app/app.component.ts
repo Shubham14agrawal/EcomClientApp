@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
           loginResponse;
 
         this.loadCurrentUser();
-        console.log("Authentication status:", isAuthenticated);
+        //console.log("Authentication status:", isAuthenticated);
         this.loadBasket();
       });
       
@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   
   loadCurrentUser() {
     this.accountService.loadCurrentUser().subscribe(() => {
-      console.log('loaded user');
+      //console.log('loaded user');
     }, error => {
       console.log(error);
     })
@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     const basketId = localStorage.getItem('basket_id');
     if (basketId) {
       this.basketService.getBasket(basketId).subscribe(() => {
-        console.log('initialised basket');
+        //console.log('initialised basket');
       }, error => {
         console.log(error);
       })

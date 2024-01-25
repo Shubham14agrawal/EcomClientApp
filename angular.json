@@ -28,6 +28,7 @@
              "src/assets"
            ],
            "styles": [
+            "node_modules/ngx-spinner/lib/ngx-spinner.component.css",
              "src/styles.scss"
            ],
            "scripts": []
