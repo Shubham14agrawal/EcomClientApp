@@ -28,11 +28,11 @@ import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client'
     NgxSpinnerModule,
     AuthModule.forRoot({
       config: {
-        authority: 'https://localhost:5443',
+        authority: 'http://localhost:5002',
         redirectUrl: 'https://localhost:4200/signin-oidc',
         postLogoutRedirectUri: 'https://localhost:4200/',
         clientId: 'interactive',
-        scope: 'CoffeeAPI.read openid profile',
+        scope: 'EComAPI.read openid profile roles claims offline_access',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,

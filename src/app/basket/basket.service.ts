@@ -147,10 +147,10 @@ export class BasketService {
       id: item.id,
       productName: item.name,
       price: item.price,
-      pictureUrl: item.pictureUrl,
+      //pictureUrl: item.pictureUrl,
       quantity,
-      brand: item.productBrand,
-      type: item.productType
+      //brand: item.productBrand,
+      //type: item.productType
     }
   }
 }
