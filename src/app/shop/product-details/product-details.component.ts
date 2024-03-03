@@ -24,13 +24,18 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   loadProduct() {
-    this.shopService.getProduct(+this.activatedRoute.snapshot.paramMap.get('id')).subscribe(product => {
-      this.product = product;
-      this.bcService.set('@productDetails', product.name);
-    }, error => {
-      console.log(error);
-    })
+    const productId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.shopService.getProduct(productId).subscribe(
+      product => {
+        this.product = product;
+        this.bcService.set('@productDetails', product.name);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
+  
 
   addItemToBasket() {
     this.basketService.addItemToBasket(this.product, this.quantity);

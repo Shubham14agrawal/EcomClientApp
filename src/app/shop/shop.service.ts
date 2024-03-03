@@ -64,7 +64,7 @@ export class ShopService {
     return this.shopParams;
   }
 
-  getProduct(id: number) {
+  getProduct(id: string) {
     let product: IProduct;
     this.productCache.forEach((products: IProduct[]) => {
       console.log(product);
