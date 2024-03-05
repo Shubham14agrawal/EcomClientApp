@@ -10,10 +10,12 @@ export interface IBasket {
 }
 
 export interface IBasketItem {
-    id: string;
-    productName: string;
+    catalogItemId: string;
+    name: string;
+    description: string;
     price: number;
     quantity: number;
+    acquiredDate: string;
     // pictureUrl: string;
     // brand: string;
     // type: string;

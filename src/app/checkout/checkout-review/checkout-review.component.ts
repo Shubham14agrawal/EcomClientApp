@@ -17,15 +17,15 @@ export class CheckoutReviewComponent implements OnInit {
   constructor(private basketService: BasketService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
-    this.basket$ = this.basketService.basket$;
+    // this.basket$ = this.basketService.basket$;
   }
 
-  createPaymentIntent() {
-    return this.basketService.createPaymentIntent().subscribe((response: any) => {
-      this.appStepper.next();
-    }, error => {
-      console.log(error);
-    })
-  }
+  // createPaymentIntent() {
+  //   return this.basketService.createPaymentIntent().subscribe((response: any) => {
+  //     this.appStepper.next();
+  //   }, error => {
+  //     console.log(error);
+  //   })
+  // }
 
 }

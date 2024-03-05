@@ -37,7 +37,7 @@ import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client'
         silentRenew: true,
         useRefreshToken: true,
         logLevel: LogLevel.Debug,
-        secureRoutes: ['https://localhost:4200/', , 'https://localhost:5001/api/' ],
+        secureRoutes: ['https://localhost:4200/', 'http://localhost:8001/cart' , 'http://localhost:5005/'],
       },
     }),
   ],
