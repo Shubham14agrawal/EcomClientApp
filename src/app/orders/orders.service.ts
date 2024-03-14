@@ -3,12 +3,12 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrdersService {
-  baseUrl = environment.apiUrl;
+  baseUrl = 'http://localhost:5010';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getOrdersForUser() {
     return this.http.get(this.baseUrl + 'orders');
