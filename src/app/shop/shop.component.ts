@@ -13,6 +13,7 @@ import { ShopService } from './shop.service';
 export class ShopComponent implements OnInit {
   @ViewChild('search', {static: false}) searchTerm: ElementRef;
   products: IProduct[];
+  visibleProducts: IProduct[]
   brands: IBrand[];
   types: IType[];
   shopParams: ShopParams;
@@ -37,6 +38,7 @@ export class ShopComponent implements OnInit {
   getProducts() {
     this.shopService.getProducts().subscribe(response => {
       this.products = response;
+      this.visibleProducts = this.products;
       console.log('res:',this.products)
       // this.totalCount = response.count;
     }, error => {
@@ -93,11 +95,17 @@ export class ShopComponent implements OnInit {
   }
 
   onSearch() {
-    const params = this.shopService.getShopParams();
-    params.search = this.searchTerm.nativeElement.value;
-    params.pageNumber = 1;
-    this.shopService.setShopParams(params);
-    this.getProducts();
+    const searchWord =<string>this.searchTerm.nativeElement.value;
+    searchWord.toLowerCase();
+    searchWord.trim()
+    if(searchWord === ""){
+      this.visibleProducts = this.products
+    }
+    else {
+      this.visibleProducts = this.products.filter((product) => {
+      return product.name.toLowerCase().includes(searchWord) || product.description.toLowerCase().includes(searchWord) || product.type.toLowerCase().includes(searchWord) || product.category.toLowerCase().includes(searchWord)
+    })
+  }
   }
 
   onReset() {

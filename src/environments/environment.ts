@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'http://localhost:8001/',
+  cartUrl:'http://localhost:5005/',
   IdentityServerUrl: 'http://localhost:5002/'
 
 };

@@ -1,33 +1,40 @@
 <div class="container mt-2">
-    <div *ngIf="(basket$ | async) === null">
+    <div *ngIf="(basket$ | async).items.length===0">
         <p>There are no items in your basket</p>
     </div>
 
-    <div *ngIf="basket$ | async">
+    <div *ngIf="(basket$ | async).items.length!=0">
         <div class="pb-5">
             <div class="container">
                 <div class="row">
                     <div class="col-12 py-5 mb-1">
-                        <!-- <app-basket-summary
+                        <app-basket-summary
                             (decrement)="decrementItemQuantity($event)"
                             (increment)="incrementItemQuantity($event)"
                             (remove)="removeBasketItem($event)"
                             [items]="(basket$ | async).items"
-                        ></app-basket-summary> -->
+                        ></app-basket-summary>
+                        
+                        
+                        
                     </div>
                 </div>
                 
                 <div class="row">
                     <div class="col-6 offset-6">
-                        <app-order-totals
+                        <div style="display:flex; justify-content: end;">
+                            Total Amount: {{(basket$ | async).totalAmount}}
+                        </div>
+                        <button class="btn btn-outline-primary py-2 btn-block" (click)="placeOrder($event)">Place Order</button>
+                        <!-- <app-order-totals
                             *ngIf="(basketTotals$ | async)"
                             [shippingPrice]="(basketTotals$ | async).shipping"
                             [subtotal]="(basketTotals$ | async).subtotal"
                             [total]="(basketTotals$ | async).total"
-                        ></app-order-totals>
-                        <a routerLink="/checkout" class="btn btn-outline-primary py-2 btn-block">
+                        ></app-order-totals> -->
+                        <!-- <a routerLink="/checkout" class="btn btn-outline-primary py-2 btn-block">
                             Proceed to checkout
-                        </a>
+                        </a> -->
                     </div>
                 </div>
             </div>
