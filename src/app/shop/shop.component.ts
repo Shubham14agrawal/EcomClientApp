@@ -1,49 +1,59 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { IBrand } from '../shared/models/brand';
 import { IProduct } from '../shared/models/product';
 import { IType } from '../shared/models/productType';
 import { ShopParams } from '../shared/models/shopParams';
 import { ShopService } from './shop.service';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
-  styleUrls: ['./shop.component.scss']
+  styleUrls: ['./shop.component.scss'],
 })
 export class ShopComponent implements OnInit {
-  @ViewChild('search', {static: false}) searchTerm: ElementRef;
+  @ViewChild('search', { static: false }) searchTerm: ElementRef;
+  @Input() category: string = 'all';
   products: IProduct[];
-  visibleProducts: IProduct[]
+  visibleProducts: IProduct[];
   brands: IBrand[];
   types: IType[];
   shopParams: ShopParams;
   totalCount: number;
   sortOptions = [
-    {name: 'Alphabetical', value: 'name'},
-    {name: 'Price: Low to high', value: 'priceAsc'},
-    {name: 'Price: High to low', value: 'priceDesc'},
-  ]
+    { name: 'Alphabetical', value: 'name' },
+    { name: 'Price: Low to high', value: 'priceAsc' },
+    { name: 'Price: High to low', value: 'priceDesc' },
+  ];
 
-  constructor(private shopService: ShopService) { 
+  constructor(
+    private shopService: ShopService,
+    private oidcSecurityService: OidcSecurityService,
+  ) {
     this.shopParams = this.shopService.getShopParams();
   }
 
   ngOnInit(): void {
-    this.getProducts(
-    );
+    this.getProducts();
+    this.oidcSecurityService.getAccessToken().subscribe((response) => {
+      console.log(response);
+    });
     // this.getBrands();
     // this.getTypes();
   }
-  
+
   getProducts() {
-    this.shopService.getProducts().subscribe(response => {
-      this.products = response;
-      this.visibleProducts = this.products;
-      console.log('res:',this.products)
-      // this.totalCount = response.count;
-    }, error => {
-      console.log(error);
-    })
+    this.shopService.getProducts(this.category).subscribe(
+      (response) => {
+        this.products = response;
+        this.visibleProducts = this.products;
+        console.log('res:', this.products);
+        // this.totalCount = response.count;
+      },
+      (error) => {
+        console.log(error);
+      },
+    );
   }
 
   // getBrands() {
@@ -95,17 +105,22 @@ export class ShopComponent implements OnInit {
   }
 
   onSearch() {
-    const searchWord =<string>this.searchTerm.nativeElement.value;
+    console.log('Start search');
+    const searchWord = <string>this.searchTerm.nativeElement.value;
     searchWord.toLowerCase();
-    searchWord.trim()
-    if(searchWord === ""){
-      this.visibleProducts = this.products
-    }
-    else {
+    searchWord.trim();
+    if (searchWord === '') {
+      this.visibleProducts = this.products;
+    } else {
       this.visibleProducts = this.products.filter((product) => {
-      return product.name.toLowerCase().includes(searchWord) || product.description.toLowerCase().includes(searchWord) || product.type.toLowerCase().includes(searchWord) || product.category.toLowerCase().includes(searchWord)
-    })
-  }
+        return (
+          product.name?.toLowerCase().includes(searchWord) ||
+          product.description?.toLowerCase().includes(searchWord) ||
+          product.type?.toLowerCase().includes(searchWord) ||
+          product.category?.toLowerCase().includes(searchWord)
+        );
+      });
+    }
   }
 
   onReset() {
@@ -114,5 +129,4 @@ export class ShopComponent implements OnInit {
     this.shopService.setShopParams(this.shopParams);
     this.getProducts();
   }
-
 }
