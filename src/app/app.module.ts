@@ -33,20 +33,12 @@ import {
         redirectUrl: 'https://localhost:4200/signin-oidc',
         postLogoutRedirectUri: 'https://localhost:4200/',
         clientId: 'interactive',
-
+        scope: 'EComAPI.read openid profile roles claims offline_access',
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,
         logLevel: LogLevel.Debug,
-FinalIntegration
         secureRoutes: ['https://localhost:4200/', 'http://localhost:8001/cart' , 'http://localhost:5005/'],
-
-        secureRoutes: [
-          'https://localhost:4200/',
-          ,
-          'https://localhost:5001/api/',
-        ],
- main
       },
     }),
   ],
