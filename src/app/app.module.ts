@@ -11,13 +11,14 @@ import { HomeModule } from './home/home.module';
 import { ErrorInterceptor } from './core/interceptors/error.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './core/interceptors/loading.interceptor';
-import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client';
-
+import {
+  AuthInterceptor,
+  AuthModule,
+  LogLevel,
+} from 'angular-auth-oidc-client';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,20 +33,28 @@ import { AuthInterceptor, AuthModule, LogLevel } from 'angular-auth-oidc-client'
         redirectUrl: 'https://localhost:4200/signin-oidc',
         postLogoutRedirectUri: 'https://localhost:4200/',
         clientId: 'interactive',
-        scope: 'EComAPI.read openid profile roles claims offline_access',
+
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,
         logLevel: LogLevel.Debug,
+FinalIntegration
         secureRoutes: ['https://localhost:4200/', 'http://localhost:8001/cart' , 'http://localhost:5005/'],
+
+        secureRoutes: [
+          'https://localhost:4200/',
+          ,
+          'https://localhost:5001/api/',
+        ],
+ main
       },
     }),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true },
-   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
