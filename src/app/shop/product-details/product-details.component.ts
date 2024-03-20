@@ -10,40 +10,45 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styleUrls: ['./product-details.component.scss']
+  styleUrls: ['./product-details.component.scss'],
 })
 export class ProductDetailsComponent implements OnInit {
   product: IProduct;
   quantity = 1;
 
-  constructor(private shopService: ShopService, private activatedRoute: ActivatedRoute,
-    private bcService: BreadcrumbService, private basketService: BasketService, private oidcSecurityService: OidcSecurityService) {
-    this.bcService.set('@productDetails', ' ')
+  constructor(
+    private shopService: ShopService,
+    private activatedRoute: ActivatedRoute,
+    private bcService: BreadcrumbService,
+    private basketService: BasketService,
+    private oidcSecurityService: OidcSecurityService,
+  ) {
+    this.bcService.set('@productDetails', ' ');
   }
 
   ngOnInit(): void {
     this.loadProduct();
-    this.oidcSecurityService.getAccessToken().subscribe(response => {
-      console.log(response)
-    })
+    this.oidcSecurityService.getAccessToken().subscribe((response) => {
+      console.log(response);
+    });
+    console.log('In product details');
   }
 
   loadProduct() {
     const productId = this.activatedRoute.snapshot.paramMap.get('id');
     this.shopService.getProduct(productId).subscribe(
-      product => {
+      (product) => {
         this.product = product;
         this.bcService.set('@productDetails', product.name);
       },
-      error => {
+      (error) => {
         console.log(error);
-      }
+      },
     );
   }
-  
 
   addItemToBasket(catalogItemId: string, quantity: number) {
-    this.basketService.addItemToBasket({catalogItemId, quantity});
+    this.basketService.addItemToBasket({ catalogItemId, quantity });
   }
 
   incrementQuantity() {
@@ -55,5 +60,4 @@ export class ProductDetailsComponent implements OnInit {
       this.quantity--;
     }
   }
-
 }

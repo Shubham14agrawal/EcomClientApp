@@ -10,10 +10,10 @@ import { of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ShopService {
-  baseUrl = environment.apiUrl;
+  baseUrl = environment.productUrl;
   products: IProduct[] = [];
   brands: IBrand[] = [];
   types: IType[] = [];
@@ -21,9 +21,9 @@ export class ShopService {
   shopParams = new ShopParams();
   productCache = new Map();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getProducts() {
+  getProducts(category: string) {
     // if (useCache === false) {
     //   this.productCache = new Map();
     // }
@@ -53,7 +53,9 @@ export class ShopService {
     // params = params.append('pageIndex', this.shopParams.pageNumber.toString());
     // params = params.append('pageSize', this.shopParams.pageSize.toString());
 
-    return this.http.get<IProduct[]>(this.baseUrl + 'product')
+    return this.http.get<IProduct[]>(this.baseUrl + 'items', {
+      params: { category },
+    });
   }
 
   setShopParams(params: ShopParams) {
@@ -68,14 +70,14 @@ export class ShopService {
     let product: IProduct;
     this.productCache.forEach((products: IProduct[]) => {
       console.log(product);
-      product = products.find(p => p.id === id);
-    })
+      product = products.find((p) => p.id === id);
+    });
 
     if (product) {
       return of(product);
     }
 
-    return this.http.get<IProduct>(this.baseUrl + 'product/' + id);
+    return this.http.get<IProduct>(this.baseUrl + 'items/' + id);
   }
 
   // getBrands() {
