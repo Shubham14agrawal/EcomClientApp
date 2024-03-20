@@ -5,6 +5,7 @@ import { IType } from '../shared/models/productType';
 import { ShopParams } from '../shared/models/shopParams';
 import { ShopService } from './shop.service';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-shop',
@@ -13,7 +14,7 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
 })
 export class ShopComponent implements OnInit {
   @ViewChild('search', { static: false }) searchTerm: ElementRef;
-  @Input() category: string = 'all';
+  category: string = 'all';
   products: IProduct[];
   visibleProducts: IProduct[];
   brands: IBrand[];
@@ -29,11 +30,14 @@ export class ShopComponent implements OnInit {
   constructor(
     private shopService: ShopService,
     private oidcSecurityService: OidcSecurityService,
+    private route: ActivatedRoute,
   ) {
     this.shopParams = this.shopService.getShopParams();
   }
 
   ngOnInit(): void {
+    const categoryParam = this.route.snapshot.queryParamMap.get('category');
+    this.category = categoryParam;
     this.getProducts();
     this.oidcSecurityService.getAccessToken().subscribe((response) => {
       console.log(response);
