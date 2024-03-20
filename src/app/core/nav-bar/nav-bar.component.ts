@@ -5,6 +5,7 @@ import { IBasket } from 'src/app/shared/models/basket';
 import { IUser } from 'src/app/shared/models/user';
 import { environment } from 'src/environments/environment';
 import { AccountService } from '../../account/account.service';
+import { ICart } from 'src/app/shared/models/cart';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,7 +13,7 @@ import { AccountService } from '../../account/account.service';
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements OnInit {
-  basket$: Observable<IBasket>;
+  basket$: Observable<ICart>;
   baseUrl = environment.IdentityServerUrl;
   currentUser$: Observable<IUser>;
 

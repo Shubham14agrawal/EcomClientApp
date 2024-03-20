@@ -34,7 +34,7 @@
                 <app-paging-header [totalCount]="totalCount" [pageNumber]="shopParams.pageNumber"
                     [pageSize]="shopParams.pageSize"></app-paging-header>
 
-                <div class="form-inline mt-2" *ngIf="products">
+                <div class="form-inline mt-2" *ngIf="visibleProducts">
                     <input (keyup.enter)="onSearch()" type="text" class="form-control mr-2" #search placeholder="Search">
                     <button (click)="onSearch()" class="btn btn-outline-primary my-2">Search</button>
                     <button (click)="onReset()" class="btn btn-outline-success ml-2 my-2">Reset</button>
@@ -42,7 +42,7 @@
             </div>
 
             <div class="row">
-                <div class="col-4 mb-4" *ngFor="let product of products">
+                <div class="col-4 mb-4" *ngFor="let product of visibleProducts">
                     <app-product-item [product]="product"></app-product-item>
                 </div>
             </div>

@@ -10,13 +10,15 @@ export interface IBasket {
 }
 
 export interface IBasketItem {
-    id: number;
-    productName: string;
+    catalogItemId: string;
+    name: string;
+    description: string;
     price: number;
     quantity: number;
-    pictureUrl: string;
-    brand: string;
-    type: string;
+    acquiredDate: string;
+    // pictureUrl: string;
+    // brand: string;
+    // type: string;
 }
 
 export class Basket implements IBasket {

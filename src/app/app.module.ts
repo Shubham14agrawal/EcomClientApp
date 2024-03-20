@@ -29,20 +29,24 @@ import {
     NgxSpinnerModule,
     AuthModule.forRoot({
       config: {
-        authority: 'https://localhost:5443',
+        authority: 'http://localhost:5002',
         redirectUrl: 'https://localhost:4200/signin-oidc',
         postLogoutRedirectUri: 'https://localhost:4200/',
         clientId: 'interactive',
-        scope: 'EComAPI.read openid profile',
+
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,
         logLevel: LogLevel.Debug,
+FinalIntegration
+        secureRoutes: ['https://localhost:4200/', 'http://localhost:8001/cart' , 'http://localhost:5005/'],
+
         secureRoutes: [
           'https://localhost:4200/',
           ,
           'https://localhost:5001/api/',
         ],
+ main
       },
     }),
   ],
