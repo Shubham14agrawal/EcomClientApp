@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBasketItem } from '../../models/basket';
-import { IOrderItem } from '../../models/order';
+import { IProduct } from '../../models/product';
+import { ShopService } from 'src/app/shop/shop.service';
 
 @Component({
   selector: 'app-basket-summary',
@@ -15,9 +16,12 @@ export class BasketSummaryComponent implements OnInit {
   @Input() items: any;
   @Input() isOrder = false;
 
-  constructor() { }
+  productsWithImages: any[] = [];
+
+  constructor(private shopService: ShopService) { }
 
   ngOnInit(): void {
+    this.loadProductImages()
     console.log("items", this.items)
   }
 
@@ -33,4 +37,17 @@ export class BasketSummaryComponent implements OnInit {
     this.remove.emit(item);
   }
 
+  loadProductImages() {
+    this.items.forEach(item => {
+      this.shopService.getProduct(item.catalogItemId).subscribe(
+        product => {
+          item.imageUrl = product.imageUrl;
+          this.productsWithImages.push(item);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    });
+  }
 }

@@ -7,4 +7,5 @@ export interface IProduct {
     category: string;
     subcategory: string;
     type: string;
+    imageUrl: string;
 }

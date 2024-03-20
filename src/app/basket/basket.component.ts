@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { IBasket, IBasketItem, IBasketTotals } from '../shared/models/basket';
+import { IBasketItem, IBasketTotals } from '../shared/models/basket';
 import { BasketService } from './basket.service';
 import { ICart } from '../shared/models/cart';
 import { CartBasket } from '../shared/models/cartBasket';
+import { IProduct } from '../shared/models/product';
 
 @Component({
   selector: 'app-basket',
@@ -13,6 +14,7 @@ import { CartBasket } from '../shared/models/cartBasket';
 export class BasketComponent implements OnInit {
   basket$: Observable<CartBasket>;
   basketTotals$: Observable<IBasketTotals>;
+  @Input() product: IProduct;
 
   constructor(private basketService: BasketService) { }
 
@@ -99,6 +101,6 @@ export class BasketComponent implements OnInit {
       }
     );
   }
-  
+
 
 }
