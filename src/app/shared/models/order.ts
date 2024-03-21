@@ -7,16 +7,14 @@ export interface IOrderToCreate {
 }
 
 export interface IOrder {
-    id: number;
-    buyerEmail: string;
-    orderDate: string;
-    shipToAddress: IAddress;
-    deliveryMethod: string;
-    shippingPrice: number;
-    orderItems: IOrderItem[];
-    subtotal: number;
-    status: string;
-    total: number;
+  orderId: string,
+  userId: string,
+  catalogItemId: string,
+  name: string,
+  price: number,
+  quantity: number,
+  orderDate: Date,
+  imageUrl: string
   }
   
   export interface IOrderItem {

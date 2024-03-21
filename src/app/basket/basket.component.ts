@@ -45,8 +45,11 @@ export class BasketComponent implements OnInit {
     this.basketTotals$ = this.basketService.basketTotal$;
   }
 
-  removeBasketItem(item: ICart) {
-    this.basketService.removeItemFromBasket(item.catalogItemId);
+  removeBasketItem(item: any) {
+    this.basketService.removeItemFromBasket(item.catalogItemId).subscribe(response => {
+      this.basketService.basketSource.next(null);
+    });
+    console.log("clicked")
   }
 
   incrementItemQuantity(item: ICart) {

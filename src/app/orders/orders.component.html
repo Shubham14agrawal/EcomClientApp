@@ -4,18 +4,23 @@
             <table class="table table-hover" style="cursor: pointer;">
                 <thead class="thead-light">
                     <tr>
-                        <th>Order</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
                         <th>Date</th>
-                        <th>Total</th>
-                        <th>Status</th>
+                        <th>Total amount</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let order of orders" routerLink="/orders/{{order.id}}">
-                        <th># {{order.id}}</th>
-                        <td>{{order.orderDate | date: 'medium'}}</td>
-                        <td>{{order.total | currency}}</td>
-                        <td>{{order.status}}</td>
+                    <tr *ngFor="let order of orders">
+                        <th>
+                            <img src="{{order.imageUrl}}" alt="{{order.name}}"
+                            class="img-fluid" style="max-height: 50px;">
+                            {{order.name}}</th>
+                        <td>{{order.price }}</td>
+                        <td>{{order.quantity }}</td>
+                        <td>{{order.orderDate}}</td>
+                        <td>{{order.price * order.quantity}}</td>
                     </tr>
                 </tbody>
             </table>

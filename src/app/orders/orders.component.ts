@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IOrder } from '../shared/models/order';
 import { OrdersService } from './orders.service';
+import { ShopService } from '../shop/shop.service';
 
 @Component({
   selector: 'app-orders',
@@ -10,7 +11,7 @@ import { OrdersService } from './orders.service';
 export class OrdersComponent implements OnInit {
   orders: IOrder[];
 
-  constructor(private orderService: OrdersService) { }
+  constructor(private orderService: OrdersService, private shopService: ShopService) { }
 
   ngOnInit(): void {
     this.getOrders();
@@ -19,9 +20,22 @@ export class OrdersComponent implements OnInit {
   getOrders() {
     this.orderService.getOrdersForUser().subscribe((orders: IOrder[]) => {
       this.orders = orders;
+      this.loadProductImages();
     }, error => {
       console.log(error);
     })
   }
 
+  loadProductImages() {
+    this.orders.forEach(order => {
+      this.shopService.getProduct(order.catalogItemId).subscribe(
+        product => {
+          order.imageUrl = product.imageUrl;
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    });
+  }
 }
