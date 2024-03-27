@@ -97,7 +97,7 @@ export class BasketService {
   }
 
   removeItemFromBasket(id: string) {
-    return this.http.delete(this.baseUrl + 'items/' + id)
+    return this.http.delete(this.baseUrl  + id)
     // const basket = this.getCurrentBasketValue();
     // if (basket.items.some(x => x.id === item.id)) {
     //   basket.items = basket.items.filter(i => i.id !== item.id);

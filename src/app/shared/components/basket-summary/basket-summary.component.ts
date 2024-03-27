@@ -16,7 +16,7 @@ export class BasketSummaryComponent implements OnInit {
   @Input() items: any;
   @Input() isOrder = false;
 
-  productsWithImages: any[] = [];
+  productsWithImages: any;
 
   constructor(private shopService: ShopService) { }
 
@@ -41,8 +41,7 @@ export class BasketSummaryComponent implements OnInit {
     this.items.forEach(item => {
       this.shopService.getProduct(item.catalogItemId).subscribe(
         product => {
-          item.imageUrl = product.imageUrl;
-          this.productsWithImages.push(item);
+          this.productsWithImages= {...this.productsWithImages, [product.id]: product.imageUrl}
         },
         error => {
           console.log(error);

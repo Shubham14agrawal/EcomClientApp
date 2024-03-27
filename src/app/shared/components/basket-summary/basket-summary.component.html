@@ -21,11 +21,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of productsWithImages">
+                <tr *ngFor="let item of items">
                     <th scope="row">
                         <div class="p-2">
-                            <img src="{{item.imageUrl}}" alt="{{item.name}}"
-                                class="img-fluid" style="max-height: 50px;">
+                            <img src="{{productsWithImages[item.catalogItemId]}}" alt="{{item.name}}"
+                            class="img-fluid" style="max-height: 50px;">
                             <div class="ml-3 d-inline-block align-middle">
                                 <h5 class="mb-0">
                                     <a routerLink="/shop/{{item.id}}"

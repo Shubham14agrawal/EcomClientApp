@@ -7,8 +7,8 @@ export const environment = {
   apiUrl: 'http://localhost:8001/',
   productUrl: 'http://localhost:5000/',
   cartUrl:'http://localhost:5005/',
-  IdentityServerUrl: 'http://localhost:5002/'
-
+  IdentityServerUrl: 'http://localhost:5002/',
+  orderUrl: 'http://localhost:5010/'
 };
 
 /*
