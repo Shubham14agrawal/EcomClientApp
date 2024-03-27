@@ -5,7 +5,7 @@
       <img
         src="{{ product.imageUrl }}"
         alt="{{ product.name }}"
-        class="img-fluid w-100"
+        class="img-fluid product-image"
       />
 
     </div>
@@ -33,12 +33,13 @@
           Add to Cart
         </button>
       </div>
-    </div>
-    <div class="row mt-5">
-      <div class="col-12 ml-3">
-        <h4>Description</h4>
-        <p>{{ product.description }}</p>
+      <div class="row mt-5">
+        <div class="col-12 ml-3">
+          <h3>Description</h3>
+          <p>{{ product.description }}</p>
+        </div>
       </div>
     </div>
+    
   </div>
 </div>

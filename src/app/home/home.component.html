@@ -23,9 +23,10 @@
 </carousel>
 <section class="featured">
   <div class="d-flex align-items-center pt-4 flex-column">
-    <h1 class="text-uppercase mb-4">Categories</h1>
-    <div class="col-3 mb-4" *ngFor="let category of categories">
-      <app-category-card [category]="category"></app-category-card>
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-3 mb-4" *ngFor="let category of categories">
+        <app-category-card [category]="category"></app-category-card>
+      </div>
     </div>
   </div>
 </section>

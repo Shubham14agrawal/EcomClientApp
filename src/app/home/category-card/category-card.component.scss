@@ -7,6 +7,9 @@
   height: 40px;
 }
 
+.card {
+  border: 14px solid rgba(0,0,0,0)
+}
 .image :hover {
   opacity: 1;
   & button {
